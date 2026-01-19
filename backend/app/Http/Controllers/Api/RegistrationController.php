@@ -62,6 +62,6 @@ class RegistrationController extends Controller
 
         $registration->delete();
 
-        return response()->json(null, 204); // 204 No Content
+        return response()->json(['message' => 'Registro cancelado correctamente.']);
     }
 }
