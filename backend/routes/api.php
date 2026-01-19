@@ -25,4 +25,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/events', [EventController::class, 'index']);
     Route::get('/events/{event}', [EventController::class, 'show']);
+
+    Route::post('/events/{event}/register', [App\Http\Controllers\Api\RegistrationController::class, 'store']);
+    Route::get('/my-registrations', [App\Http\Controllers\Api\RegistrationController::class, 'index']);
+    Route::delete('/my-registrations/{registration}', [App\Http\Controllers\Api\RegistrationController::class, 'destroy']);
 });
