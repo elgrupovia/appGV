@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('push_tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
-            $table->string('city');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->text('token');
+            $table->string('platform');
             $table->timestamps();
+
+            $table->unique(['user_id', 'token']);
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('push_tokens');
     }
 };
