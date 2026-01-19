@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
@@ -67,6 +66,6 @@ class EventController extends Controller
     {
         $event->delete();
 
-        return response()->json(['message' => 'Event deleted successfully'], 200);
+        return response()->json(null, 204);
     }
 }

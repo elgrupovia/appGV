@@ -23,8 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'me']);
 
-    Route::get('/events', [EventController::class, 'index']);
-    Route::get('/events/{event}', [EventController::class, 'show']);
+    Route::apiResource('events', EventController::class);
 
     Route::post('/events/{event}/register', [App\Http\Controllers\Api\RegistrationController::class, 'store']);
     Route::get('/my-registrations', [App\Http\Controllers\Api\RegistrationController::class, 'index']);
