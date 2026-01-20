@@ -26,12 +26,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // Events
     Route::get('/events', [EventController::class, 'index']);
     Route::get('/events/{event}', [EventController::class, 'show']);
-    Route::post('/events', [EventController::class, 'store'])->middleware('role:admin');
-    Route::put('/events/{event}', [EventController::class, 'update'])->middleware('role:admin');
-    Route::delete('/events/{event}', [EventController::class, 'destroy'])->middleware('role:admin');
+    Route::post('/events', [EventController::class, 'store'])->middleware(\App\Http\Middleware\RoleMiddleware::class . ':admin');
+    Route::put('/events/{event}', [EventController::class, 'update'])->middleware(\App\Http\Middleware\RoleMiddleware::class . ':admin');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->middleware(\App\Http\Middleware\RoleMiddleware::class . ':admin');
 
 
-    Route::post('/events/{event}/register', [App\Http\Controllers\Api\RegistrationController::class, 'store'])->middleware('role:attendee');
-    Route::get('/my-registrations', [App\Http\Controllers\Api\RegistrationController::class, 'index'])->middleware('role:attendee');
-    Route::delete('/my-registrations/{registration}', [App\Http\Controllers\Api\RegistrationController::class, 'destroy'])->middleware('role:attendee');
+    Route::post('/events/{event}/register', [App\Http\Controllers\Api\RegistrationController::class, 'store'])->middleware(\App\Http\Middleware\RoleMiddleware::class . ':attendee');
+    Route::get('/my-registrations', [App\Http\Controllers\Api\RegistrationController::class, 'index'])->middleware(\App\Http\Middleware\RoleMiddleware::class . ':attendee');
+    Route::delete('/my-registrations/{registration}', [App\Http\Controllers\Api\RegistrationController::class, 'destroy'])->middleware(\App\Http\Middleware\RoleMiddleware::class . ':attendee');
 });
