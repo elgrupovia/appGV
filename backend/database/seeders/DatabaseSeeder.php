@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Limpia los usuarios creados por defecto para evitar duplicados.
+        User::query()->delete();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            RoleSeeder::class,
+            UserRoleSeeder::class,
+            EventSeeder::class,
         ]);
-
-        $this->call(EventSeeder::class);
     }
 }

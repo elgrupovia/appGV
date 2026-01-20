@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -45,5 +46,56 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if the user has a specific role.
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
+
+    /**
+     * Check if the user is an administrator.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
+
+    /**
+     * Check if the user is a sponsor.
+     *
+     * @return bool
+     */
+    public function isSponsor(): bool
+    {
+        return $this->hasRole('sponsor');
+    }
+
+    /**
+     * Check if the user is a speaker.
+     *
+     * @return bool
+     */
+    public function isSpeaker(): bool
+    {
+        return $this->hasRole('speaker');
+    }
+
+    /**
+     * Check if the user is an attendee.
+     *
+     * @return bool
+     */
+    public function isAttendee(): bool
+    {
+        return $this->hasRole('attendee');
     }
 }

@@ -23,9 +23,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'me']);
 
-    Route::apiResource('events', EventController::class);
+    // Events
+    Route::get('/events', [EventController::class, 'index']);
+    Route::get('/events/{event}', [EventController::class, 'show']);
+    Route::post('/events', [EventController::class, 'store'])->middleware('role:admin');
+    Route::put('/events/{event}', [EventController::class, 'update'])->middleware('role:admin');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->middleware('role:admin');
 
-    Route::post('/events/{event}/register', [App\Http\Controllers\Api\RegistrationController::class, 'store']);
-    Route::get('/my-registrations', [App\Http\Controllers\Api\RegistrationController::class, 'index']);
-    Route::delete('/my-registrations/{registration}', [App\Http\Controllers\Api\RegistrationController::class, 'destroy']);
+
+    Route::post('/events/{event}/register', [App\Http\Controllers\Api\RegistrationController::class, 'store'])->middleware('role:attendee');
+    Route::get('/my-registrations', [App\Http\Controllers\Api\RegistrationController::class, 'index'])->middleware('role:attendee');
+    Route::delete('/my-registrations/{registration}', [App\Http\Controllers\Api\RegistrationController::class, 'destroy'])->middleware('role:attendee');
 });
