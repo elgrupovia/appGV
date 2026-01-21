@@ -41,6 +41,23 @@ class User extends Authenticatable
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['roles'];
+
+    /**
+     * Get the user's roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getRolesAttribute()
+    {
+        return $this->roles()->get();
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
