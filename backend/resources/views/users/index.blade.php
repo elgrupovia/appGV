@@ -13,6 +13,7 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>Email</th>
+            <th>Rol</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -22,6 +23,13 @@
             <td>{{ $user->id }}</td>
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
+            <td>
+                @if($user->roles && $user->roles->count())
+                    {{ $user->roles->pluck('name')->implode(', ') }}
+                @else
+                    -
+                @endif
+            </td>
             <td>
                 <a href="/users/{{ $user->id }}" class="btn btn-info btn-sm">Ver</a>
                 <a href="/users/{{ $user->id }}/edit" class="btn btn-warning btn-sm">Editar</a>
