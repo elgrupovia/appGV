@@ -14,27 +14,30 @@ class EventSeeder extends Seeder
     public function run(): void
     {
         Event::create([
-            'title' => 'Laravel Conference 2026',
-            'description' => 'A deep dive into the Laravel ecosystem.',
-            'start_date' => now()->addMonths(2),
-            'end_date' => now()->addMonths(2)->addDays(2),
+            'name' => 'Laravel Conference 2026',
+            'date' => now()->addMonths(2),
             'city' => 'Madrid',
+            'type' => 'Normal',
+            'location' => '123 Main St, Madrid',
+            'sponsors' => 'Sponsor A, Sponsor B',
         ]);
 
         Event::create([
-            'title' => 'Vue.js Forward',
-            'description' => 'The future of the progressive JavaScript framework.',
-            'start_date' => now()->addMonths(3),
-            'end_date' => now()->addMonths(3)->addDays(1),
+            'name' => 'Vue.js Forward',
+            'date' => now()->addMonths(3),
             'city' => 'Barcelona',
+            'type' => 'Networking',
+            'location' => '456 Market St, Barcelona',
+            'sponsors' => 'Sponsor C',
         ]);
 
         Event::create([
-            'title' => 'Livewire Live',
-            'description' => 'Build dynamic interfaces without leaving PHP.',
-            'start_date' => now()->addMonths(4),
-            'end_date' => now()->addMonths(4),
+            'name' => 'Livewire Live',
+            'date' => now()->addMonths(4),
             'city' => 'Valencia',
+            'type' => 'Normal',
+            'location' => '789 Beach Rd, Valencia',
+            'sponsors' => null,
         ]);
     }
 }

@@ -15,11 +15,12 @@ class Event extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
-        'description',
-        'start_date',
-        'end_date',
+        'name',
+        'date',
         'city',
+        'type',
+        'location',
+        'sponsors',
     ];
 
     /**
@@ -28,7 +29,6 @@ class Event extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
+        'date' => 'datetime',
     ];
 }

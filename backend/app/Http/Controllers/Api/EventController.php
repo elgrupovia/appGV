@@ -22,11 +22,12 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'name' => 'required|string|max:255',
+            'date' => 'required|date',
             'city' => 'required|string|max:255',
+            'type' => 'required|in:Normal,Networking',
+            'location' => 'required|string|max:255',
+            'sponsors' => 'nullable|string',
         ]);
 
         $event = Event::create($request->all());
@@ -48,11 +49,12 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $request->validate([
-            'title' => 'sometimes|required|string|max:255',
-            'description' => 'sometimes|required|string',
-            'start_date' => 'sometimes|required|date',
-            'end_date' => 'sometimes|required|date|after_or_equal:start_date',
+            'name' => 'sometimes|required|string|max:255',
+            'date' => 'sometimes|required|date',
             'city' => 'sometimes|required|string|max:255',
+            'type' => 'sometimes|required|in:Normal,Networking',
+            'location' => 'sometimes|required|string|max:255',
+            'sponsors' => 'nullable|string',
         ]);
 
         $event->update($request->all());
