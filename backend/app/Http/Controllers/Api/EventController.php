@@ -67,6 +67,6 @@ class EventController extends Controller
     {
         $event->delete();
 
-        return response()->json(['message' => 'Event deleted successfully'], 200);
+        return response()->json(['message' => 'Evento eliminado correctamente'], 200);
     }
 }

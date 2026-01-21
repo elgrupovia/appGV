@@ -23,7 +23,7 @@ class RegistrationController extends Controller
             ->first();
 
         if ($existingRegistration) {
-            return response()->json(['message' => 'You are already registered for this event.'], 409); // 409 Conflict
+            return response()->json(['message' => 'Ya estás registrado para este evento.'], 409); // 409 Conflict
         }
 
         $registration = new Registration();
@@ -32,7 +32,7 @@ class RegistrationController extends Controller
         $registration->save();
 
         return response()->json([
-            'message' => 'Successfully registered for the event.',
+            'message' => 'Registrado correctamente en el evento.',
             'registration' => $registration
         ], 201);
     }

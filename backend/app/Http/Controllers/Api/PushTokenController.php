@@ -27,6 +27,6 @@ class PushTokenController extends Controller
             'device_type' => $request->device_type,
         ]);
 
-        return response()->json(['message' => 'Push token stored successfully.', 'token' => $token], 201);
+        return response()->json(['message' => 'El token push se almacenó correctamente.', 'token' => $token], 201);
     }
 }
