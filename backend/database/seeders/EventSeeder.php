@@ -20,6 +20,7 @@ class EventSeeder extends Seeder
             'type' => 'Normal',
             'location' => '123 Main St, Madrid',
             'sponsors' => 'Sponsor A, Sponsor B',
+            'image' => 'https://via.placeholder.com/640x480.png/00ff77?text=Event+Image',
         ]);
 
         Event::create([
@@ -29,6 +30,7 @@ class EventSeeder extends Seeder
             'type' => 'Networking',
             'location' => '456 Market St, Barcelona',
             'sponsors' => 'Sponsor C',
+            'image' => 'https://via.placeholder.com/640x480.png/00ff77?text=Event+Image',
         ]);
 
         Event::create([
@@ -38,6 +40,7 @@ class EventSeeder extends Seeder
             'type' => 'Normal',
             'location' => '789 Beach Rd, Valencia',
             'sponsors' => null,
+            'image' => 'https://via.placeholder.com/640x480.png/00ff77?text=Event+Image',
         ]);
     }
 }

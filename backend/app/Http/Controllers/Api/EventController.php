@@ -28,6 +28,7 @@ class EventController extends Controller
             'type' => 'required|in:Normal,Networking',
             'location' => 'required|string|max:255',
             'sponsors' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
         ]);
 
         $event = Event::create($request->all());
@@ -55,6 +56,7 @@ class EventController extends Controller
             'type' => 'sometimes|required|in:Normal,Networking',
             'location' => 'sometimes|required|string|max:255',
             'sponsors' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
         ]);
 
         $event->update($request->all());

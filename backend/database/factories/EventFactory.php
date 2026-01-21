@@ -23,6 +23,7 @@ class EventFactory extends Factory
             'type' => fake()->randomElement(['Normal', 'Networking']),
             'location' => fake()->address(),
             'sponsors' => fake()->company() . ', ' . fake()->company(),
+            'image' => fake()->imageUrl(),
         ];
     }
 }

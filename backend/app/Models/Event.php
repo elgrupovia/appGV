@@ -21,6 +21,7 @@ class Event extends Model
         'type',
         'location',
         'sponsors',
+        'image',
     ];
 
     /**
