@@ -22,14 +22,6 @@
                         <label for="password" class="form-label">Contraseña</label>
                         <input id="password" type="password" class="form-control" name="password" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Rol</label>
-                        <select id="role" name="role" class="form-control" required>
-                            @foreach(\App\Models\Role::all() as $role)
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Crear</button>
                     </div>
