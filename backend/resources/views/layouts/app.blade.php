@@ -4,77 +4,53 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'AppGV')</title>
-    <!-- Fonts -->
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <!-- Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">AppGV</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/events">Eventos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/users">Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/registrations">Registros</a>
-                        </li>
-                </ul>
-                <ul class="navbar-nav">
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div>
+                    <a class="text-xl font-semibold text-gray-800" href="{{ url('/') }}">AppGV</a>
+                </div>
+                <div>
                     @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">Register</a>
-                        </li>
+                        <a class="text-gray-800 hover:text-blue-500" href="{{ route('login') }}">Login</a>
+                        <a class="ml-4 text-gray-800 hover:text-blue-500" href="{{ route('register') }}">Register</a>
                     @else
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
+                        <span class="text-gray-800 text-sm pr-4">{{ Auth::user()->name }}</span>
+                        
+                        @if(Auth::user()->isAdmin())
+                            <a href="{{ url('/admin/dashboard') }}" class="px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-blue-600">Admin Dashboard</a>
+                        @endif
+
+                        @if(Auth::user()->isSpeaker())
+                             <a href="{{ url('/speaker/dashboard') }}" class="px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-blue-600">Speaker Dashboard</a>
+                        @endif
+                        
+                        @if(Auth::user()->isSponsor())
+                             <a href="{{ url('/sponsor/dashboard') }}" class="px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-blue-600">Sponsor Dashboard</a>
+                        @endif
+
+                        @if(Auth::user()->isAttendee())
+                             <a href="{{ url('/attendee/dashboard') }}" class="px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-blue-600">My Dashboard</a>
+                        @endif
+                        
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-gray-800 hover:text-blue-500 ml-4">Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     @endguest
-                </ul>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    <main class="container mx-auto px-6 py-8">
         @yield('content')
-    </div>
+    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
