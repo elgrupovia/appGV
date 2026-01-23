@@ -11,12 +11,14 @@ Route::get('/', function () {
 });
 
 Route::get('/events', [WebEventController::class, 'index']);
-Route::get('/events/{event}', [WebEventController::class, 'show']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/events/create', [WebEventController::class, 'create'])->name('events.create');
     Route::post('/events', [WebEventController::class, 'store'])->name('events.store');
 });
+
+Route::get('/events/{event}', [WebEventController::class, 'show']);
+
 
 // Registration Routes
 Route::get('/register', [AuthController::class, 'createRegistrationForm'])->name('register');
