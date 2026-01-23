@@ -7,8 +7,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ZohoWebhookController;
 
-use App\Http\Controllers\ZohoWebhookController;
-
 Route::get('/', function () {
     return redirect('/events');
 });
@@ -24,12 +22,6 @@ Route::get('/events/{event}', [WebEventController::class, 'show']);
 
 // Endpoint to receive event data from Zoho CRM (POST)
 Route::post('/zoho-webhook', [ZohoWebhookController::class, 'handle']);
-
-// Endpoint para recibir datos desde Zoho CRM (POST)
-Route::post('/zoho-webhook', [ZohoWebhookController::class, 'receive']);
-
-// Vista para mostrar los datos recibidos
-Route::get('/zoho-webhook', [ZohoWebhookController::class, 'show']);
 
 
 // Registration Routes
