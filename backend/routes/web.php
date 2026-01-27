@@ -21,11 +21,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/events/{event}', [WebEventController::class, 'show']);
 
-// Endpoint para recibir datos desde Zoho CRM (POST)
-Route::post('/zoho-webhook', [ZohoWebhookController::class, 'receive']);
-
-// Vista para mostrar los datos recibidos
-Route::get('/zoho-webhook', [ZohoWebhookController::class, 'show']);
+// Vista para mostrar los datos del último webhook recibido
+Route::get('/show-zoho-data', [ZohoWebhookController::class, 'showLastWebhook']);
 
 
 // Registration Routes
