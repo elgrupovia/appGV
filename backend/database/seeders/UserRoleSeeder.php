@@ -21,6 +21,8 @@ class UserRoleSeeder extends Seeder
         // Obtener los roles
         $adminRole = Role::where('name', 'admin')->first();
         $attendeeRole = Role::where('name', 'attendee')->first();
+        $speakerRole = Role::where('name', 'speaker')->first();
+        $sponsorRole = Role::where('name', 'sponsor')->first();
 
         // Crear usuario Administrador
         $adminUser = User::create([
@@ -37,5 +39,21 @@ class UserRoleSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
         $attendeeUser->roles()->attach($attendeeRole);
+
+        // Crear usuario Speaker
+        $speakerUser = User::create([
+            'name' => 'Speaker User',
+            'email' => 'speaker@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $speakerUser->roles()->attach($speakerRole);
+
+        // Crear usuario Sponsor
+        $sponsorUser = User::create([
+            'name' => 'Sponsor User',
+            'email' => 'sponsor@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $sponsorUser->roles()->attach($sponsorRole);
     }
 }
