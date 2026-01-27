@@ -61,7 +61,6 @@ class ZohoWebhookController extends Controller
         }
     }
 }
-<?php
 
 namespace App\Http\Controllers;
 
