@@ -7,6 +7,19 @@
     <h2>Usuarios</h2>
     <a href="/users/create" class="btn btn-success">Crear Usuario</a>
 </div>
+
+<form action="" method="GET" class="mb-3">
+    <div class="input-group">
+        <select name="role" class="form-control">
+            <option value="">All</option>
+            @foreach($roles as $role)
+                <option value="{{ $role->name }}" {{ request('role') == $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
+            @endforeach
+        </select>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
+
 <table class="table table-bordered">
     <thead>
         <tr>

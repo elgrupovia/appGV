@@ -7,6 +7,19 @@
     <h2>Registros</h2>
     <a href="/registrations/create" class="btn btn-success">Nuevo Registro</a>
 </div>
+
+<form action="" method="GET" class="mb-3">
+    <div class="input-group">
+        <select name="event_id" class="form-control">
+            <option value="">All</option>
+            @foreach($events as $event)
+                <option value="{{ $event->id }}" {{ request('event_id') == $event->id ? 'selected' : '' }}>{{ $event->name }}</option>
+            @endforeach
+        </select>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
+
 <table class="table table-bordered">
     <thead>
         <tr>

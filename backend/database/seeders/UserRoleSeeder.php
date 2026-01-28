@@ -26,7 +26,7 @@ class UserRoleSeeder extends Seeder
 
         // Crear usuario Administrador
         $adminUser = User::create([
-            'name' => 'Admin User',
+            'name' => 'Juan Garcia',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
         ]);
@@ -34,7 +34,7 @@ class UserRoleSeeder extends Seeder
 
         // Crear usuario Asistente
         $attendeeUser = User::create([
-            'name' => 'Attendee User',
+            'name' => 'Maria Rodriguez',
             'email' => 'attendee@example.com',
             'password' => Hash::make('password'),
         ]);
@@ -42,7 +42,7 @@ class UserRoleSeeder extends Seeder
 
         // Crear usuario Speaker
         $speakerUser = User::create([
-            'name' => 'Speaker User',
+            'name' => 'Carlos Martinez',
             'email' => 'speaker@example.com',
             'password' => Hash::make('password'),
         ]);
@@ -50,7 +50,7 @@ class UserRoleSeeder extends Seeder
 
         // Crear usuario Sponsor
         $sponsorUser = User::create([
-            'name' => 'Sponsor User',
+            'name' => 'Ana Lopez',
             'email' => 'sponsor@example.com',
             'password' => Hash::make('password'),
         ]);

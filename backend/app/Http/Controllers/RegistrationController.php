@@ -9,10 +9,18 @@ use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $registrations = Registration::with(['user', 'event'])->get();
-        return view('registrations.index', compact('registrations'));
+        $events = Event::all();
+        $registrations = Registration::with(['user', 'event']);
+
+        if ($request->has('event_id') && $request->event_id != '') {
+            $registrations->where('event_id', $request->event_id);
+        }
+
+        $registrations = $registrations->get();
+
+        return view('registrations.index', compact('registrations', 'events'));
     }
 
     public function create()

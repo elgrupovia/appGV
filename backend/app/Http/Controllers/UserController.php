@@ -8,10 +8,20 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+        $roles = Role::all();
+        $users = User::query();
+
+        if ($request->has('role')) {
+            $users->whereHas('roles', function ($query) use ($request) {
+                $query->where('name', $request->role);
+            });
+        }
+
+        $users = $users->get();
+
+        return view('users.index', compact('users', 'roles'));
     }
 
     public function create()
