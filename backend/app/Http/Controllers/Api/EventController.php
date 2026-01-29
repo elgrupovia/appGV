@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
@@ -21,6 +22,9 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('Intent de crear evento - Headers: ', $request->headers->all());
+        Log::info('Intent de crear evento - User: ', ['user' => $request->user()]);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|date',

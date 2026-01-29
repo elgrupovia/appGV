@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ZohoWebhookController;
 
 /*
@@ -26,6 +27,9 @@ Route::post('/zoho-webhook', [ZohoWebhookController::class, 'handleWebhook']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'me']);
+
+    // Gestión de Usuarios (Solo Admin) - API Resource
+    Route::apiResource('users', UserController::class)->middleware(\App\Http\Middleware\RoleMiddleware::class . ':admin');
 
     // Events
     Route::get('/events', [EventController::class, 'index']);
