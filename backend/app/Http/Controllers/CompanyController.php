@@ -14,6 +14,11 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::latest()->paginate(10);
+
+        if (request()->wantsJson()) {
+            return response()->json($companies);
+        }
+
         // Asume que tienes una vista en: resources/views/companies/index.blade.php
         return view('layouts.index', compact('companies'));
     }
@@ -48,7 +53,11 @@ class CompanyController extends Controller
             $validatedData['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
-        Company::create($validatedData);
+        $company = Company::create($validatedData);
+
+        if ($request->wantsJson()) {
+            return response()->json($company, 201);
+        }
 
         return redirect()->route('companies.index')->with('success', 'Empresa creada correctamente.');
     }
@@ -60,6 +69,11 @@ class CompanyController extends Controller
     {
         // Carga la relación con los usuarios para mostrarla en la vista de detalles
         $company->load('users');
+
+        if (request()->wantsJson()) {
+            return response()->json($company);
+        }
+
         return view('layouts.show', compact('company'));
     }
 
@@ -98,6 +112,10 @@ class CompanyController extends Controller
 
         $company->update($validatedData);
 
+        if ($request->wantsJson()) {
+            return response()->json($company);
+        }
+
         return redirect()->route('companies.index')->with('success', 'Empresa actualizada correctamente.');
     }
 
@@ -111,6 +129,10 @@ class CompanyController extends Controller
         }
         
         $company->delete();
+
+        if (request()->wantsJson()) {
+            return response()->json(null, 204);
+        }
 
         return redirect()->route('companies.index')->with('success', 'Empresa eliminada correctamente.');
     }
