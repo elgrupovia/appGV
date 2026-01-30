@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ZohoWebhookController;
-
+use App\Http\Controllers\CompanyController;
 
 Route::get('/', function () {
     return redirect('/events');
@@ -53,4 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/registrations', [RegistrationController::class, 'store']);
     Route::get('/registrations/{registration}', [RegistrationController::class, 'show']);
     Route::delete('/registrations/{registration}', [RegistrationController::class, 'destroy']);
+
+    // Rutas para Empresas (CRUD) - Web
+    Route::resource('companies', CompanyController::class)->names('companies');
 });

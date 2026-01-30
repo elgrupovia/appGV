@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\ZohoWebhookController;
 
 /*
@@ -30,6 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Gestión de Usuarios (Solo Admin) - API Resource
     Route::apiResource('users', UserController::class)->middleware(\App\Http\Middleware\RoleMiddleware::class . ':admin');
+
+    // Gestión de Empresas
+    Route::apiResource('companies', CompanyController::class, ['as' => 'api']);
 
     // Events
     Route::get('/events', [EventController::class, 'index']);

@@ -27,6 +27,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/registrations">Registros</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('companies.index') }}">Empresas</a>
+                        </li>
                 </ul>
                 <ul class="navbar-nav">
                     @guest
@@ -77,4 +80,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
