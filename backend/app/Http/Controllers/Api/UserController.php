@@ -92,6 +92,9 @@ class UserController extends Controller
             ],
             'password' => 'sometimes|nullable|string|min:8|confirmed',
             'role' => 'sometimes|string|exists:roles,name',
+            'company_id' => 'nullable|exists:companies,id',
+
+            // Ejemplo en store/update de UserController
         ]);
 
         if ($validator->fails()) {
