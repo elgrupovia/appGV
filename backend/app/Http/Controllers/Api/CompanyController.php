@@ -32,6 +32,7 @@ class CompanyController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'sector' => 'required|string|max:255',
+            'contact' => 'nullable|string|max:255',
             'phone' => 'required|string|max:50',
             'email' => 'required|email|max:255',
             'website' => 'nullable|string|max:255',
@@ -86,6 +87,7 @@ class CompanyController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|required|string|max:255',
             'sector' => 'sometimes|required|string|max:255',
+            'contact' => 'nullable|string|max:255',
             'phone' => 'sometimes|required|string|max:50',
             'email' => 'sometimes|required|email|max:255',
             'website' => 'nullable|string|max:255',

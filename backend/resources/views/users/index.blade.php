@@ -27,6 +27,7 @@
             <th>Nombre</th>
             <th>Email</th>
             <th>Rol</th>
+            <th>Empresa </th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -42,6 +43,9 @@
                 @else
                     -
                 @endif
+            </td>
+            <td>
+                {{ $user->company ? $user->company->name : 'Sin Empresa' }}
             </td>
             <td>
                 <a href="/users/{{ $user->id }}" class="btn btn-info btn-sm">Ver</a>

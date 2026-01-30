@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,7 +12,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $roles = Role::all();
-        $users = User::query();
+        $users = User::with('company');
 
         if ($request->has('role')) {
             $users->whereHas('roles', function ($query) use ($request) {
@@ -27,7 +28,8 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('users.create', compact('roles'));
+        $companies = Company::all();
+        return view('users.create', compact('roles', 'companies'));
     }
 
     public function store(Request $request)
@@ -37,11 +39,13 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'role' => 'required|exists:roles,id',
+            'company_id' => 'nullable|exists:companies,id',
         ]);
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
+            'company_id' => $request->company_id,
         ]);
         $user->roles()->attach($validated['role']);
         return redirect('/users')->with('success', 'Usuario creado correctamente');
@@ -54,7 +58,9 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        $roles = Role::all();
+        $companies = Company::all();
+        return view('users.edit', compact('user', 'roles', 'companies'));
     }
 
     public function update(Request $request, User $user)
@@ -63,10 +69,12 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:6',
+            'company_id' => 'nullable|exists:companies,id',
         ]);
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'company_id' => $request->company_id,
         ]);
         if (!empty($validated['password'])) {
             $user->password = bcrypt($validated['password']);

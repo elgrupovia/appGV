@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         // Carga los usuarios con sus roles para evitar consultas N+1
-        $users = User::with('roles')->get();
+        $users = User::with(['roles', 'company'])->get();
         return response()->json($users);
     }
 
@@ -36,6 +36,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|string|exists:roles,name',
+            'company_id' => 'nullable|exists:companies,id',
         ]);
 
         if ($validator->fails()) {
@@ -49,6 +50,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'company_id' => $request->company_id,
         ]);
 
         // Asignar el rol recibido
@@ -67,7 +69,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         // Carga los roles para el usuario específico
-        $user->load('roles');
+        $user->load(['roles', 'company']);
         return response()->json($user);
     }
 
@@ -101,7 +103,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
         }
 
-        $userData = $request->only(['name', 'email']);
+        $userData = $request->only(['name', 'email', 'company_id']);
         if ($request->filled('password')) {
             $userData['password'] = Hash::make($request->password);
         }

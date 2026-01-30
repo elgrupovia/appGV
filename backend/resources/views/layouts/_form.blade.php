@@ -14,6 +14,13 @@
         @error('sector') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
     </div>
 
+    <!-- Contacto -->
+    <div>
+        <label for="contact" class="block text-sm font-medium text-gray-700">Contacto</label>
+        <input type="text" name="contact" id="contact" value="{{ old('contact', $company->contact ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        @error('contact') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+    </div>
+
     <!-- Teléfono -->
     <div>
         <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label>

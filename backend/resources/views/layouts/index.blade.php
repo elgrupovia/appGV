@@ -19,6 +19,7 @@
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Sector</th>
+                            <th scope="col">Contacto</th>
                             <th scope="col">Email</th>
                             <th scope="col">Teléfono</th>
                             <th scope="col">Acciones</th>
@@ -39,6 +40,7 @@
                                     </div>
                                 </td>
                                 <td>{{ $company->sector }}</td>
+                                <td>{{ $company->contact }}</td>
                                 <td>{{ $company->email }}</td>
                                 <td>{{ $company->phone }}</td>
                                 <td>

@@ -23,6 +23,15 @@
                         <label for="password" class="form-label">Contraseña (dejar en blanco para no cambiar)</label>
                         <input id="password" type="password" class="form-control" name="password">
                     </div>
+                    <div class="mb-3">
+                        <label for="company_id" class="form-label">Empresa</label>
+                        <select id="company_id" name="company_id" class="form-control">
+                            <option value="">Seleccione una empresa</option>
+                            @foreach($companies as $company)
+                                <option value="{{ $company->id }}" {{ $user->company_id == $company->id ? 'selected' : '' }}>{{ $company->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Actualizar</button>
                     </div>

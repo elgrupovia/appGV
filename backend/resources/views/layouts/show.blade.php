@@ -30,6 +30,7 @@
                 </div>
                 <div class="col-md-8">
                     <p><strong>Sector:</strong> {{ $company->sector }}</p>
+                    <p><strong>Contacto:</strong> {{ $company->contact }}</p>
                     <p><strong>Email:</strong> <a href="mailto:{{ $company->email }}">{{ $company->email }}</a></p>
                     <p><strong>Teléfono:</strong> {{ $company->phone }}</p>
                     <p><strong>Sitio Web:</strong> <a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></p>
