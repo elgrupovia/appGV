@@ -12,11 +12,22 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
+    ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'web.role' => \App\Http\Middleware\WebRoleMiddleware::class,
         ]);
+
+        $middleware->cors(
+            paths: ['api/*', 'sanctum/csrf-cookie'],
+            allowed_methods: ['*'],
+            allowed_origins: ['*'],
+            allowed_origins_patterns: [],
+            allowed_headers: ['*'],
+            exposed_headers: [],
+            max_age: 0,
+            supports_credentials: true,
+        );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
