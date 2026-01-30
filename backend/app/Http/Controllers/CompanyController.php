@@ -13,7 +13,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::latest()->paginate(10);
+        $companies = Company::with('users')->latest()->paginate(10);
 
         if (request()->wantsJson()) {
             return response()->json($companies);

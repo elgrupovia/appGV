@@ -40,7 +40,13 @@
                                     </div>
                                 </td>
                                 <td>{{ $company->sector }}</td>
-                                <td>{{ $company->contact }}</td>
+                                <td>
+                                    @if($company->users->isNotEmpty())
+                                        {{ $company->users->first()->name }}
+                                    @else
+                                        {{ $company->contact ?? '-' }}
+                                    @endif
+                                </td>
                                 <td>{{ $company->email }}</td>
                                 <td>{{ $company->phone }}</td>
                                 <td>
@@ -55,7 +61,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">
+                                <td colspan="6" class="text-center">
                                     No hay empresas registradas.
                                 </td>
                             </tr>

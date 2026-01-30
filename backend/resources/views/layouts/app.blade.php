@@ -22,7 +22,7 @@
                             <a class="nav-link" href="/events">Eventos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/users">Usuarios</a>
+                            <a class="nav-link" href="/users">Contactos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/registrations">Registros</a>

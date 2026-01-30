@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Usuarios')
+@section('title', 'Contactos')
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Usuarios</h2>
+    <h2>Contactos</h2>
     <a href="/users/create" class="btn btn-success">Crear Usuario</a>
 </div>
 
