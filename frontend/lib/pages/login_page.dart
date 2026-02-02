@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/register_page.dart';
-import 'package:frontend/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
+import '../services/auth_service.dart';
+import 'register_page.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,83 +11,82 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _isLoading = false;
-
-  Future<void> _login() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-      try {
-        await Provider.of<AuthProvider>(context, listen: false).login(
-          _emailController.text,
-          _passwordController.text,
-        );
-      } catch (error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to login. Please check your credentials.'),
-          ),
-        );
-      } finally {
-        if (mounted) {
-          setState(() {
-            _isLoading = false;
-          });
-        }
-      }
-    }
-  }
+  final authService = AuthService();
+  bool _loading = false;
+  String? _error;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+      appBar: AppBar(title: const Text('Login')),
+      body: Center(
+        child: SizedBox(
+          width: 300,
           child: Column(
-            children: <Widget>[
-              TextFormField(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
               ),
-              TextFormField(
+              TextField(
                 controller: _passwordController,
                 decoration: const InputDecoration(labelText: 'Password'),
                 obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _isLoading ? null : _login,
-                child: _isLoading ? const CircularProgressIndicator() : const Text('Login'),
-              ),
+              if (_error != null)
+                Text(_error!, style: const TextStyle(color: Colors.red)),
+              const SizedBox(height: 10),
+              _loading
+                  ? const CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: () async {
+                        setState(() {
+                          _loading = true;
+                          _error = null;
+                        });
+                        try {
+                          final data = await authService.login(
+                              _emailController.text,
+                              _passwordController.text);
+                          if (data.containsKey('token')) {
+                            if (mounted) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const HomePage()),
+                              );
+                            }
+                          } else {
+                            setState(() {
+                              _error = 'Login failed';
+                            });
+                          }
+                        } catch (e) {
+                          setState(() {
+                            _error = e.toString();
+                          });
+                        } finally {
+                          setState(() {
+                            _loading = false;
+                          });
+                        }
+                      },
+                      child: const Text('Login'),
+                    ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const RegisterPage()),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const RegisterPage()),
                   );
                 },
                 child: const Text('Register'),
-              ),
+              )
             ],
           ),
         ),

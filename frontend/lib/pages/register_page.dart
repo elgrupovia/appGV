@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
+import '../services/auth_service.dart';
+import 'home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,108 +10,87 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _passwordConfirmationController = TextEditingController();
-  bool _isLoading = false;
-
-  Future<void> _register() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-      try {
-        await Provider.of<AuthProvider>(context, listen: false).register(
-          _nameController.text,
-          _emailController.text,
-          _passwordController.text,
-          _passwordConfirmationController.text,
-        );
-        if (mounted) {
-          Navigator.of(context).pop();
-        }
-      } catch (error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to register.'),
-          ),
-        );
-      } finally {
-        if (mounted) {
-          setState(() {
-            _isLoading = false;
-          });
-        }
-      }
-    }
-  }
+  final _confirmController = TextEditingController();
+  final authService = AuthService();
+  bool _loading = false;
+  String? _error;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+      appBar: AppBar(title: const Text('Register')),
+      body: Center(
+        child: SizedBox(
+          width: 300,
           child: Column(
-            children: <Widget>[
-              TextFormField(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: 'Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
               ),
-              TextFormField(
+              TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
               ),
-              TextFormField(
+              TextField(
                 controller: _passwordController,
                 decoration: const InputDecoration(labelText: 'Password'),
                 obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
               ),
-              TextFormField(
-                controller: _passwordConfirmationController,
-                decoration: const InputDecoration(labelText: 'Confirm Password'),
+              TextField(
+                controller: _confirmController,
+                decoration:
+                    const InputDecoration(labelText: 'Confirm Password'),
                 obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please confirm your password';
-                  }
-                  if (value != _passwordController.text) {
-                    return 'Passwords do not match';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _isLoading ? null : _register,
-                child: _isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text('Register'),
-              ),
+              if (_error != null)
+                Text(_error!, style: const TextStyle(color: Colors.red)),
+              const SizedBox(height: 10),
+              _loading
+                  ? const CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: () async {
+                        setState(() {
+                          _loading = true;
+                          _error = null;
+                        });
+                        try {
+                          final data = await authService.register(
+                            _nameController.text,
+                            _emailController.text,
+                            _passwordController.text,
+                            _confirmController.text,
+                          );
+                          if (data.containsKey('token')) {
+                            if (mounted) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const HomePage()),
+                              );
+                            }
+                          } else {
+                            setState(() {
+                              _error = 'Register failed';
+                            });
+                          }
+                        } catch (e) {
+                          setState(() {
+                            _error = e.toString();
+                          });
+                        } finally {
+                          setState(() {
+                            _loading = false;
+                          });
+                        }
+                      },
+                      child: const Text('Register'),
+                    ),
             ],
           ),
         ),
